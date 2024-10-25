@@ -1,6 +1,6 @@
 # React Modal Pop
 
-A fun and customizable modal package for React, letting you easily add emoji-based confirmation dialogs to your app!
+An easy to use and customizable modal package for React, letting you easily launch modal dialogs in your app!
 
 Check out the [live demo](https://mesutrk95.github.io/react-modal-pop/) of the modal in action.
 
@@ -25,7 +25,7 @@ npm install react-modal-pop
 To use the styles provided by the package, import the CSS file in your index.ts (or `index.js`):
 
 ```typescript
-import "react-modal-pop/dist/index.css";
+import "react-modal-pop/dist/index.min.css";
 ```
 
 ### Step 2: Add the Modals Container
@@ -49,7 +49,7 @@ root.render(
 
 Now you can easily trigger modals in your components using the `useModal` hook:
 
-```typescript
+```jsx
 import { useModal } from "react-modal-pop";
 
 const MyModal1 = ({ close, name }: { close: any; name: string }) => {
