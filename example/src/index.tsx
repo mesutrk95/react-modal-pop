@@ -16,6 +16,6 @@ root.render(
   <React.StrictMode>
     <App />
 
-    <ModalContainer />
+    <ModalContainer animation={{ duration: 200 }} />
   </React.StrictMode>
 ); 

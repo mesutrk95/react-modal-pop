@@ -23,12 +23,12 @@ const ModalBody = ({ close, name }: { close: any, name: string }) => {
 }
 
 function App() {
-  const { show, hide } = useModal();
+  const { show } = useModal();
 
   const onShow = async () => {
-    setTimeout(() => {
-      hide({ status: 'dismissed' });
-    }, 5000);
+    // setTimeout(() => {
+    //   hide({ status: 'dismissed' });
+    // }, 5000);
 
     const result = await show(ModalBody, { name: 'John Doe' });
     console.log(result);

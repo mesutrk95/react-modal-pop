@@ -1,82 +1,53 @@
-import { useEffect, useState } from "react";
-import { useSpring, animated, config, easings } from "@react-spring/web";
+import { useEffect, useMemo, useState } from "react";
 import { useSyncExternalStore } from "react";
 import { modalsStore, ModalState } from "./store";
 
-export const ModalContainer = () => {
+
+export const ModalContainer = ({ containerClass, overlayClass, animation }:
+  { containerClass?: string, overlayClass?: string, animation?: { duration: number } }) => {
   const currentModal = useSyncExternalStore(
     modalsStore.subscribe,
     modalsStore.getSnapshot
   );
   const [isVisible, setIsVisible] = useState(false);
+  const [animState, setAnimState] = useState<string>('');
   const [lastState, setLastState] = useState<ModalState | null>(null);
-
-  const [modalSpring, modalApi] = useSpring(() => ({
-    from: { transform: "translateY(-100%)" },
-    config: { ...config.gentle },
-  }));
-
-  const [containerSpring, containerApi] = useSpring(
-    () => ({
-      from: { opacity: 0 },
-      config: { ...config.gentle, duration: 200 },
-      onRest: () => {
-        if (!currentModal) {
-          setIsVisible(false);
-        }
-      },
-    }),
-    [currentModal]
-  );
 
   useEffect(() => {
     if (currentModal) {
-      setIsVisible(true);
       setLastState(currentModal);
-      modalApi.start({
-        from: { transform: "translateY(-100%)" },
-        to: { transform: "translateY(0%)" },
-        config: { tension: 280, friction: 20 },
-      });
-      containerApi.start({
-        opacity: 1,
-      });
-    } else {
-      modalApi.start({
-        to: { transform: "translateY(-100%) scale(80%)" },
-      });
-      containerApi.start({
-        opacity: 0,
-        config: {
-          duration: 200,
-          easing: easings.easeInCubic,
-        },
-      });
-    }
-  }, [currentModal, modalApi, containerApi]);
+      setIsVisible(true);
+      setTimeout(() => {
+        setAnimState('enter');
+      }, 100);
 
-  if (!isVisible) return null;
+    } else {
+      setAnimState('exit');
+      setTimeout(() => {
+        setIsVisible(false);
+      }, animation?.duration);
+    }
+  }, [currentModal]);
+
+  const transitionDuration = useMemo(() => {
+    if (!animation?.duration) return {};
+    return { transitionDuration: `${animation.duration}ms` }
+  }, [animation?.duration])
 
   return (
-    <animated.div
-      className="pop-modal-container"
-      style={{
-        ...containerSpring,
-      }}
+    <div
+      className={`pop-modal-container ${containerClass} ${animState === 'enter' ? 'show' : ''} ${!isVisible ? 'd-none' : ''}`}
+      style={transitionDuration}
     >
       <div
-        className="pop-modal-overlay"
+        className={`pop-modal-overlay ${overlayClass}`}
+        style={transitionDuration}
         onClick={() => modalsStore.hideModal()}
       />
-      <animated.div
-        className={"center-box"}
-        style={{
-          ...modalSpring,
-        }}
-      >
+      <div className={"center-box"}>
         {lastState?.modal}
-      </animated.div>
-    </animated.div>
+      </div>
+    </div>
   );
 };
 
