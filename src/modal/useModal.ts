@@ -14,16 +14,14 @@ export const useModal = () => {
     ): Promise<T | undefined> => {
       return new Promise((resolve) => {
         const close = (data?: T) => {
-          modalsStore.setCurrentModal(null);
-          resolve(data);
+          modalsStore.hideModal(data);
         };
-
         const ModalElement = React.createElement(ModalComponent, props ? { ...props, close } : { close, ...{} as P });
-        modalsStore.setCurrentModal(ModalElement);
+        modalsStore.setCurrentModal(ModalElement, resolve);
       });
     },
-    hide: () => {
-      modalsStore.setCurrentModal(null);
+    hide: < P extends {}>(props?: P) => {
+      modalsStore.hideModal(props);
     },
   };
 };

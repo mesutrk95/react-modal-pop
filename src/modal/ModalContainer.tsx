@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSpring, animated, config, easings } from "@react-spring/web";
 import { useSyncExternalStore } from "react";
-import { modalsStore } from "./store";
+import { modalsStore, ModalState } from "./store";
 
 export const ModalContainer = () => {
   const currentModal = useSyncExternalStore(
@@ -9,7 +9,7 @@ export const ModalContainer = () => {
     modalsStore.getSnapshot
   );
   const [isVisible, setIsVisible] = useState(false);
-  const [lastModal, setLastModal] = useState<React.ReactNode | null>(null);
+  const [lastState, setLastState] = useState<ModalState | null>(null);
 
   const [modalSpring, modalApi] = useSpring(() => ({
     from: { transform: "translateY(-100%)" },
@@ -32,7 +32,7 @@ export const ModalContainer = () => {
   useEffect(() => {
     if (currentModal) {
       setIsVisible(true);
-      setLastModal(currentModal);
+      setLastState(currentModal);
       modalApi.start({
         from: { transform: "translateY(-100%)" },
         to: { transform: "translateY(0%)" },
@@ -66,7 +66,7 @@ export const ModalContainer = () => {
     >
       <div
         className="pop-modal-overlay"
-        onClick={() => modalsStore.setCurrentModal(null)}
+        onClick={() => modalsStore.hideModal()}
       />
       <animated.div
         className={"center-box"}
@@ -74,7 +74,7 @@ export const ModalContainer = () => {
           ...modalSpring,
         }}
       >
-        {lastModal}
+        {lastState?.modal}
       </animated.div>
     </animated.div>
   );
