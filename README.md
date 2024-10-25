@@ -50,7 +50,7 @@ root.render(
 Now you can easily trigger modals in your components using the `useModal` hook:
 
 ```typescript
-import { useCuteModal } from "cute-emojies-modal";
+import { useModal } from "react-modal-pop";
 
 const MyModal1 = ({ close, name }: { close: any; name: string }) => {
   return (
