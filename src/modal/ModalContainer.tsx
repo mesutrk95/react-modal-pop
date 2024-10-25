@@ -3,7 +3,7 @@ import { useSyncExternalStore } from "react";
 import { modalsStore, ModalState } from "./store";
 
 
-export const ModalContainer = ({ containerClass, overlayClass, animation }:
+export const ModalContainer = ({ containerClass, overlayClass, animation = { duration: 200 } }:
   { containerClass?: string, overlayClass?: string, animation?: { duration: number } }) => {
   const currentModal = useSyncExternalStore(
     modalsStore.subscribe,

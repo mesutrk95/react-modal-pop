@@ -1,6 +1,6 @@
 # React Modal Pop
 
-An easy to use and customizable modal package for React, letting you easily launch modal dialogs in your app!
+An easy to use, ultra light and customizable modal package for React, letting you easily launch modal dialogs in your app!
 
 Check out the [live demo](https://mesutrk95.github.io/react-modal-pop/) of the modal in action.
 
@@ -32,7 +32,7 @@ import "react-modal-pop/dist/index.min.css";
 
 To enable modals, ensure you add the ModalContainer component to the app root. This is usually done in your main `index.tsx` file:
 
-```typescript
+```jsx
 import { ModalContainer } from 'react-modal-pop';
 
 ...
