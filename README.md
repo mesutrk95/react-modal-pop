@@ -1,4 +1,4 @@
-# Cute Emojies Modal
+# React Modal Pop
 
 A fun and customizable modal package for React, letting you easily add emoji-based confirmation dialogs to your app!
 

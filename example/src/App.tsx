@@ -1,13 +1,24 @@
 import { useModal } from 'react-modal-pop';
 
-const ModalBody = ({ close }: { close: any }) => {
+const ModalBody = ({ close, name }: { close: any, name: string }) => {
   return (
-    <>
-      <h1>Body</h1>
-      <div>
-        <button onClick={() => close({ status: 'ok' })}>Ok</button>
+    <div className="modal position-static d-block">
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Modal title</h5>
+            <button type="button" className="btn-close" onClick={() => close()} aria-label="Close"></button>
+          </div>
+          <div className="modal-body">
+            <p>The name '{name}' text goes here.</p>
+          </div>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-secondary" onClick={() => close()}>Close</button>
+            <button type="button" className="btn btn-primary" onClick={() => close({ status: 'ok' })}>Save changes</button>
+          </div>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 
