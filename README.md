@@ -65,10 +65,11 @@ const MyModal1 = ({ close, name }: { close: any; name: string }) => {
 };
 
 function App() {
-  const modal = useModal();
+  const { show } = useModal();
 
   const onShowClick = async () => {
-    const result = await modal(MyModal1, { name: "John" });
+    const modal = show(MyModal1, { name: "John" });
+    const result = await modal.result()
     console.log('result', result)
   };
 

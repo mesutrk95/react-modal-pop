@@ -11,17 +11,30 @@ export const useModal = () => {
     show: <T, P extends {}>(
       ModalComponent: React.ComponentType<ModalProps<T, P | undefined>>,
       props?: P
-    ): Promise<T | undefined> => {
-      return new Promise((resolve) => {
-        const close = (data?: T) => {
-          modalsStore.hideModal(data);
-        };
-        const ModalElement = React.createElement(ModalComponent, props ? { ...props, close } : { close, ...{} as P });
-        modalsStore.setCurrentModal(ModalElement, resolve);
-      });
-    },
-    hide: < P extends {}>(props?: P) => {
-      modalsStore.hideModal(props);
+    ) => {
+      if (!ModalComponent) {
+        throw new Error("No modal component provided");
+      }
+
+      const close = (data?: T) => {
+        modalsStore.hideModal(data);
+      };
+
+      const ModalElement = React.createElement(
+        ModalComponent,
+        props ? { ...props, close } : { close, ...{} as P }
+      );
+
+      modalsStore.setCurrentModal(ModalElement);
+
+      return {
+        result: (): Promise<T | undefined> => new Promise((resolve) => {
+          modalsStore.setCurrentModal(ModalElement, resolve);
+        }),
+        hide: () => {
+          modalsStore.hideModal();
+        }
+      }
     },
   };
 };
