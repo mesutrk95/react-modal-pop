@@ -7,8 +7,9 @@
   "author": "Masoud Rezakhanlou <masoud.rk95@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mesutrk95/react-modal-pop.git"
+    "url": "git+https://github.com/mesutrk95/react-modal-pop.git"
   },
+  "homepage": "https://github.com/mesutrk95/react-modal-pop#readme",
   "engines": {
     "node": ">=10"
   },
